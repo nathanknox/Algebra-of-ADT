@@ -1,3 +1,5 @@
+Understanding the algebra in Algebraic Data Types - a tweet thread 
+
 
 The Algebraic Data Types are composite types - a type formed by the combination of other types. They are commonly classified in two: products and sums (or co-products).
 	
@@ -86,8 +88,8 @@ Or that 1+1 = 2
 Finally, time for some magic. Here is the definition of List.
 
 	Object List {
-	case object Empty extends List[Nothing]
-	case class ::[A](value: A, right: List[A]) extends List[A]
+		case object Empty extends List[Nothing]
+		case class ::[A](value: A, right: List[A]) extends List[A]
 	}
 
 List is a sum type and can be represented as 
@@ -96,11 +98,11 @@ List is a sum type and can be represented as
 	
 We will do some basic algebraic manipulations to this equation,
 
-	List(a) - a*List(a) = 1
+	List(a) - a * List(a) = 1
 	List(a)(1 - a) = 1
 	List(a) = 1/(1-a)
 
 What does 1/(1-a) signify? It is the sum of a geometric progression.  
-Recall that a geometric progression is 1+a+a*a+a*a*a. 
-Isn’t this actually a representation of list itself? Nil Or (a) Or (a,a) OR (a,a,a) and so on.
+Recall that a geometric progression is 1 + a + a*a + a*a*a + a*a*a*a and so on. 
+Isn’t this actually a representation of list itself?  => Nil OR (a) OR (a,a) OR (a,a,a) and so on.
 
