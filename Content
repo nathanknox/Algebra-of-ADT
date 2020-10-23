@@ -1,0 +1,90 @@
+
+The Algebraic Data Types are composite types - a type formed by the combination of other types. They are commonly classified in two: products and sums (or co-products).
+Product type - A way of creating new types from other types by AND-ing them. 
+For example, Money = Amount * Currency 
+Any valid representation of money must have an Amount AND a currency. 
+They are known as products because the number of possible values they can have is the product of the number of possible values of the component parts. They are supported in all mainstream programming languages. Think classes in Java, Struct in C.
+
+
+Sum type - A way of creating new types form other types by OR-ing them. 
+For example, Currency = USD + EUR + GBP 
+A valid Currency must be exactly one of - USD OR EUR OR GBP. 
+They are known as sum because the number of possible values that can have is: the sum of the number of possible values of the parts that compose it. They traditionally only had direct support in languages such as Scala or Haskell
+
+
+A pair (in Haskell) or tuple2 (in Scala) is the simplest product type. 
+Either is the simplest sum type.
+
+
+Before diving into the Algebra of ADTs, we need to know what it means for 2 things to be equal up to isomorphism. At a certain level of abstraction, 2 things may be considered equal even though they are not the same. 
+For eg, (a,b) != (b,a), but they are "equal up to isomorphism", meaning, LHS has the same information as RHS even though their structures differ. We can losslessly construct one from the other.
+(a, (b,c)) != ((a,b),c) but they are equal up to isomorphism and can essentially be represented by Tuple(a,b,c).
+Jumping into the algebra now. Sum with zero (Identity in sum) can be represented as Either(a, Nothing)
+ Either(Int, Nothing) = Left(Int) = Int  *
+*= implies equal up to isomorphism
+Product with zero can be represented as class(a,Nothing)
+case class Pair(a:Int, nothing:Nothing)
+
+	This is a legal statement, but a tricky one, as we can never construct an instance of Pair. We        need to provide an instance of Nothing to construct Pair, which is impossible. 
+
+
+	Pair = Nothing 
+
+
+	*= implies equal up to isomorphism
+
+
+Product with 1 (identity for product) is represented as case class(a, ())
+
+case class BoolIdentity(a:Boolean, unit:Unit)
+case class IntIdentity(a:Int, unit:Unit)
+
+We can construct exactly 2 values of BoolIdentity - one with True and the other with False. In the same way we have as many unique values of IntIdentity as there are unique Ints. Which means -
+
+
+BoolIdentity = Boolean 
+IntIdentity = Int 
+
+
+* = means equal up to isomorphism
+				
+
+Now let's try Sum with 1. Optional is equivalent to adding 1 to something. 
+
+Optional = None OR Some(a) 
+Optional(Boolean) can have 3 values - None, Some(true), Some(false) 
+Optional(Int) can have exactly 1 value more than the number of unique Ints. 
+The names of constructors are different here, but the meaning is the same as Either(Unit, a)
+
+
+Let's say we want to do 1+1. Following from the above, this is Either(Unit, Unit)
+
+Either(Unit, Unit) = Left(Unit) or Right(Unit)
+
+It creates 2 unique values. If we represent Left(Unit) as false and Right(Unit) as true, we've basically shown that 
+
+
+Either(Unit, Unit) = Boolean
+
+
+Or that 1+1 = 2
+
+Finally, time for some magic. Here is the definition of List.
+
+Object List {
+case object Empty extends List[Nothing]
+case class ::[A](value: A, right: List[A]) extends List[A]
+}
+
+List is a sum type and can be represented as 
+
+List(a) = 1+ a * List(a)
+We will do some basic algebraic manipulations to this equation,
+
+List(a) - a*List(a) = 1
+List(a)(1 - a) = 1
+List(a) = 1/(1-a)
+
+
+What does 1/(1-a) signify? It is the sum of a geometric progression.  Recall that a geometric progression is 1+a+a*a+a*a*a. Isn’t this actually a representation of list itself? Nil Or (a) Or (a,a) OR (a,a,a) and so on.
+
