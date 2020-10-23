@@ -1,7 +1,7 @@
 Understanding the algebra in Algebraic Data Types - a tweet thread 
 
 
-The Algebraic Data Types are composite types - a type formed by the combination of other types. They are commonly classified in two: products and sums (or co-products).
+Algebraic Data Types are composite types - types formed by the combination of other types. They are commonly classified in two: product types and sum types (or co-products).
 	
 Product type - A way of creating new types from other types by AND-ing them. 
 For example, Money = Amount * Currency 
@@ -21,7 +21,7 @@ A pair (in Haskell) or tuple2 (in Scala) is the simplest product type.
 Either is the simplest sum type.
 
 
-Before diving into the Algebra of ADTs, we need to know what it means for 2 things to be *equal up to isomorphism*. 
+Before diving into the algebra of ADTs, we need to know what it means for 2 things to be *equal up to isomorphism*. 
 At a certain level of abstraction, 2 things may be considered equal even though they are not the same. 
 
 
